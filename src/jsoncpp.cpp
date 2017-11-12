@@ -233,7 +233,7 @@ namespace Json {
 #include <cstring>
 #include <istream>
 #include <sstream>
-#include <memory>
+#include <EssexEngineCore/WeakPointer.h>
 #include <set>
 #include <limits>
 
@@ -4100,7 +4100,7 @@ namespace Json {
 #include "json_tool.h"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 #include <iomanip>
-#include <memory>
+#include <EssexEngineCore/WeakPointer.h>
 #include <sstream>
 #include <utility>
 #include <set>
