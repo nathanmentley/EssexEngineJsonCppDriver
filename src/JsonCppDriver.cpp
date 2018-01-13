@@ -18,29 +18,29 @@ EssexEngine::Drivers::JsonCpp::JsonCppDriver::JsonCppDriver(WeakPointer<Context>
 
 EssexEngine::Drivers::JsonCpp::JsonCppDriver::~JsonCppDriver() {}
 
-std::unique_ptr<EssexEngine::Daemons::Json::IJsonDocument> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonDocument(std::string data) {
+EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonDocument(std::string data) {
     Json::Reader reader;
     Json::Value value;
 
     reader.parse(data, value);
 
-    return std::unique_ptr<Daemons::Json::IJsonDocument>((Daemons::Json::IJsonDocument*)new JsonDocument(value));
+    return WeakPointer<Daemons::Json::IJsonDocument>((Daemons::Json::IJsonDocument*)new JsonDocument(value));
 }
 
-std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> doc, std::string key) {    
+EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> doc, std::string key) {    
     return GetJsonNode(GetJsonDocumentPointer(doc), key);
 }
 
 
-std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> node, std::string key) {
+EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> node, std::string key) {
     return GetJsonNode(GetJsonDocumentPointer(node), key);
 }
 
-std::list<std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> doc, std::string key) {
+std::list<EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> doc, std::string key) {
     return GetJsonNodeArray(GetJsonDocumentPointer(doc), key);
 }
 
-std::list<std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> node, std::string key) {
+std::list<EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> node, std::string key) {
     return GetJsonNodeArray(GetJsonDocumentPointer(node), key);
 }
 
@@ -74,9 +74,9 @@ EssexEngine::Nullable<bool> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetBoo
     return GetBoolFromNode(GetJsonDocumentPointer(node));
 }
 
-std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::CreateNode() {
+EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::CreateNode() {
     Json::Value data;
-    return std::unique_ptr<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(data));
+    return WeakPointer<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(data));
 }
 
 void EssexEngine::Drivers::JsonCpp::JsonCppDriver::RemoveNode(EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonDocument> doc, std::string key) {
@@ -129,19 +129,19 @@ std::string EssexEngine::Drivers::JsonCpp::JsonCppDriver::SerializeDocument(Esse
 }
 
 
-std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Drivers::JsonCpp::JsonDocument> doc, std::string key) {
+EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNode(EssexEngine::WeakPointer<EssexEngine::Drivers::JsonCpp::JsonDocument> doc, std::string key) {
     Json::Value target = doc->data[key];
     
-    return std::unique_ptr<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(target));
+    return WeakPointer<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(target));
 }
 
-std::list<std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Drivers::JsonCpp::JsonDocument> doc, std::string key) {
+std::list<EssexEngine::WeakPointer<EssexEngine::Daemons::Json::IJsonNode>> EssexEngine::Drivers::JsonCpp::JsonCppDriver::GetJsonNodeArray(EssexEngine::WeakPointer<EssexEngine::Drivers::JsonCpp::JsonDocument> doc, std::string key) {
     Json::Value array = doc->data[key];
     
-    std::list<std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode>> ret = std::list<std::unique_ptr<EssexEngine::Daemons::Json::IJsonNode>>();
+    std::list<WeakPointer<EssexEngine::Daemons::Json::IJsonNode>> ret = std::list<WeakPointer<EssexEngine::Daemons::Json::IJsonNode>>();
     
     for (int i = 0; i < array.size(); i++) {
-        std::unique_ptr<Daemons::Json::IJsonNode> node = std::unique_ptr<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(array[i]));
+        WeakPointer<Daemons::Json::IJsonNode> node = WeakPointer<Daemons::Json::IJsonNode>((Daemons::Json::IJsonNode*)new JsonDocument(array[i]));
         
         ret.push_back(std::move(node));
     }

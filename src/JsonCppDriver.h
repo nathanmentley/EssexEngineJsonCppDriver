@@ -42,12 +42,12 @@ namespace JsonCpp{
                 }
             }
         
-            std::unique_ptr<Daemons::Json::IJsonDocument> GetJsonDocument(std::string data);
-            std::unique_ptr<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<Daemons::Json::IJsonDocument> doc, std::string key);
-            std::unique_ptr<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<Daemons::Json::IJsonNode> node, std::string key);
+            WeakPointer<Daemons::Json::IJsonDocument> GetJsonDocument(std::string data);
+            WeakPointer<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<Daemons::Json::IJsonDocument> doc, std::string key);
+            WeakPointer<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<Daemons::Json::IJsonNode> node, std::string key);
         
-            std::list<std::unique_ptr<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<Daemons::Json::IJsonDocument> doc, std::string key);
-            std::list<std::unique_ptr<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<Daemons::Json::IJsonNode> node, std::string key);
+            std::list<WeakPointer<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<Daemons::Json::IJsonDocument> doc, std::string key);
+            std::list<WeakPointer<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<Daemons::Json::IJsonNode> node, std::string key);
         
             Nullable<std::string> GetStringFromNode(WeakPointer<Daemons::Json::IJsonDocument> document, std::string key);
             Nullable<int> GetIntFromNode(WeakPointer<Daemons::Json::IJsonDocument> document, std::string key);
@@ -61,7 +61,7 @@ namespace JsonCpp{
             Nullable<int> GetIntFromNode(WeakPointer<Daemons::Json::IJsonNode> node);
             Nullable<bool> GetBoolFromNode(WeakPointer<Daemons::Json::IJsonNode> node);
         
-            std::unique_ptr<Daemons::Json::IJsonNode> CreateNode();
+            WeakPointer<Daemons::Json::IJsonNode> CreateNode();
         
             void RemoveNode(WeakPointer<Daemons::Json::IJsonDocument> doc, std::string key);
             void RemoveNode(WeakPointer<Daemons::Json::IJsonNode> node, std::string key);
@@ -87,8 +87,8 @@ namespace JsonCpp{
             std::string GetDriverName() { return "JsonCpp"; }
             std::string GetDriverVersion() { return ESSEX_ENGINE_VERSION; }
         protected:
-            std::unique_ptr<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<JsonDocument> doc, std::string key);
-            std::list<std::unique_ptr<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<JsonDocument> doc, std::string key);
+            WeakPointer<Daemons::Json::IJsonNode> GetJsonNode(WeakPointer<JsonDocument> doc, std::string key);
+            std::list<WeakPointer<Daemons::Json::IJsonNode>> GetJsonNodeArray(WeakPointer<JsonDocument> doc, std::string key);
             Nullable<std::string> GetStringFromNode(WeakPointer<JsonDocument> node, std::string key);
             Nullable<int> GetIntFromNode(WeakPointer<JsonDocument> node, std::string key);
             Nullable<bool> GetBoolFromNode(WeakPointer<JsonDocument> node, std::string key);
