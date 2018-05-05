@@ -11,10 +11,16 @@
 
 #include <EssexEngineJsonCppDriver/JsonCppDriver.h>
 
-extern "C" {
-    void driver_init(EssexEngine::Context* context) {
-        EssexEngine::Drivers::JsonCpp::JsonCppDriver* jsonDriver = new EssexEngine::Drivers::JsonCpp::JsonCppDriver(context);
+using EssexEngine::Context;
+using EssexEngine::WeakPointer;
 
-        context->RegisterDriver<EssexEngine::Daemons::Json::IJsonDriver>(jsonDriver);
+using EssexEngine::Drivers::JsonCpp::JsonCppDriver;
+using EssexEngine::Daemons::Json::IJsonDriver;
+
+extern "C" {
+    void driver_init(WeakPointer<Context> context) {
+        context->RegisterDriver<IJsonDriver>(
+            WeakPointer<IJsonDriver>(new JsonCppDriver(context)) 
+        );
     }
 }
